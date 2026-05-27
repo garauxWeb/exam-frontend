@@ -1,20 +1,25 @@
 export function useExamResults() {
 
     const checkIfAnswerIsCorrect = (answer) => {
-        const correctAnswer = answer.question.options.find(q => q.text === answer.value && q.is_correct === true)
-        if (correctAnswer) {
-            return true
-        }
-        return false
+        if (answer.question?.type === 'open') return null
+
+        return answer.question.options?.some(q => q.text === answer.value && q.is_correct === true) ?? false
     }
 
     const getRightAnswer = (answer) => {
-        const studentAnswer = answer.value
-        const correctAnswer = answer.question.options.find(q => q.is_correct === true).text
+        // Le domande aperte non hanno opzioni
+        if (answer.question?.type === 'open') return null
 
-        if (studentAnswer !== correctAnswer) {
-            return correctAnswer
+        const studentAnswer = answer.value
+        const correctOption = answer.question.options?.find(q => q.is_correct === true)
+
+        if (!correctOption) return null
+
+        if (studentAnswer !== correctOption.text) {
+            return correctOption.text
         }
+
+        return null
     }
 
     const getFinalExamResult = (val) => {

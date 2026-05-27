@@ -39,7 +39,7 @@
               {{ answer.value ?? 'No answer (time expired)' }}
             </span>
           </div>
-          <div class="mt-5 text-green-500" v-if="!checkIfAnswerIsCorrect(answer)">
+          <div class="mt-5 text-green-500" v-if="answer.question?.type !== 'open' && !checkIfAnswerIsCorrect(answer)">
             <div class="flex items-center">
               <h3 class="text-md mr-2">Right answer is:</h3>
               <div class="flex items-center gap-2">

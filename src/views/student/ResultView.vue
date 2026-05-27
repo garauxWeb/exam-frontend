@@ -178,7 +178,10 @@ onMounted(async () => {
 // Count answers where is_correct is true
 const correctCount = computed(() => {
   if (!results.value?.answers) return 0
-  return results.value.answers.filter(a => a.is_correct === true).length
+  return results.value.answers.filter(a => {
+    if (a.question?.type === 'open') return (a.ai_score ?? 0) >= 6
+    return a.is_correct === true
+  }).length
 })
 
 // Total number of questions
