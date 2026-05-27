@@ -2,7 +2,7 @@
   <div class="min-h-screen bg-slate-50 font-sans flex flex-col">
 
     <!-- ── Header ─────────────────────────────────────────── -->
-    <student-header title="Student Dashboard" :show-back-button="false"/>
+    <student-header title="Student Dashboard" :show-back-button="route.name === 'student-results' ? true : false" />
 
     <!-- ── Main ───────────────────────────────────────────── -->
     <main class="flex-1 max-w-6xl mx-auto w-full py-10">
@@ -100,15 +100,22 @@
         </div>
 
         <!-- ── Answer breakdown ────────────────────────────── -->
-        <div class="flex">
+        <div class="flex mb-3">
           <button
               @click="openAnswersTab(false)"
-              class="font-display font-semibold text-slate-700 text-sm mb-4 bg-green-100 py-1 px-4 mr-3">
+              :class="[
+      'font-display  border border-gray-500 text-sm py-1 px-4 mr-3 transition-colors duration-200',
+      !showDetailsResult ? 'bg-gray-500 text-white' : 'hover:bg-gray-500 hover:text-white'
+    ]">
             Answers list
           </button>
+
           <button
               @click="openAnswersTab(true)"
-              class="font-display font-semibold text-slate-700 text-sm mb-4 bg-green-300 py-1 px-4">
+              :class="[
+      'font-display border border-gray-500 text-sm py-1 px-4 transition-colors duration-200',
+      showDetailsResult ? 'bg-gray-500 text-white' : 'hover:bg-gray-500 hover:text-white'
+    ]">
             Show result details
           </button>
         </div>
