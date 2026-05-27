@@ -2,7 +2,7 @@
   <div class="min-h-screen bg-slate-50 font-sans flex flex-col">
 
     <!-- ── Header ─────────────────────────────────────────── -->
-    <student-header title="Student Dashboard" :show-back-button="route.name === 'student-results' ? true : false" />
+    <student-header title="Student Dashboard" :show-dashboard="true" :show-exam-completed="true" />
 
     <!-- ── Main ───────────────────────────────────────────── -->
     <main class="flex-1 max-w-6xl mx-auto w-full py-10">
@@ -69,8 +69,8 @@
 
           <!-- Stats row -->
           <div class="grid grid-cols-4 gap-3 px-8 py-6">
-            <div class="bg-slate-50 py-8  relative rounded-sm">
-              <div class="absolute top-[-14px]  border bg-blue-500 text-white text-xs px-2 rounded-sm">Scores</div>
+            <div class="bg-slate-50 py-8  relative rounded-sm border border-gray-400">
+              <div class="absolute top-[-16px]  bg-gray-600 text-white px-4 font-semibold text-xs">Scores</div>
               <div class="flex justify-center items-center">
                 <p class="text-2xl font-display font-semibold text-slate-800">
                   {{ scorePercentage }}%

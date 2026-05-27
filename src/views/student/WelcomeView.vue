@@ -1,5 +1,5 @@
 <template>
-  <layout-header title="Exam page"/>
+  <student-header title="Exam page" :show-dashboard="true" />
   <div class="min-h-screen bg-slate-50 font-sans flex items-center justify-center px-4">
 
     <div class="w-full max-w-md">
@@ -132,6 +132,7 @@ import { useQuizStore } from '@/stores/useQuizStore.js'
 import { examApi } from '@/api/exams/index.js'
 import AppIcon from '@/components/icons/AppIcon.vue'
 import LayoutHeader from "@/components/layout/LayoutHeader.vue";
+import StudentHeader from "@/components/layout/StudentHeader.vue";
 
 const router = useRouter()
 const route = useRoute()

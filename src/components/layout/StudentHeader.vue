@@ -1,17 +1,15 @@
 <script setup>
 import {useRoute, useRouter} from "vue-router";
 import BackButton from "@/components/ui/BackButton.vue";
+import AppIcon from "@/components/icons/AppIcon.vue";
 
 const router = useRouter()
 
-const props = defineProps({
-  title: {
-    type: String,
-  },
-  showBackButton: {
-    type: Boolean,
-    default: true,
-  }
+defineProps({
+  title: { type: String },
+  showBackButton: { type: Boolean, default: false },
+  showDashboard: {type: Boolean, default: false},
+  showExamCompleted: { type: Boolean, default: false },
 })
 </script>
 
@@ -26,10 +24,21 @@ const props = defineProps({
       </div>
 
       <div class="flex items-center">
-                  <span class="text-xs text-white bg-green-500 px-3 py-1.5 rounded-full mr-3">
+                  <span class="text-xs text-white bg-green-500 px-3 py-1.5 rounded-full mr-3" v-if="showExamCompleted">
           Exam completed
         </span>
        <back-button v-if="showBackButton"/>
+        <button
+            v-if="showDashboard"
+            @click="router.push('/student')"
+            class="text-slate-400 hover:text-slate-600 transition-colors duration-200"
+        >
+          <div class="flex items-center justify-center">
+            <app-icon icon="mdi:arrow-left" size="18" color="currentColor" />
+            <span class="text-sm">Back to the dashboard</span>
+          </div>
+
+        </button>
       </div>
 
     </div>

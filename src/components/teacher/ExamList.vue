@@ -12,6 +12,12 @@ const { confirmDelete,showStudentStats,goToBuilder,toggleStudentStats } = useTea
 
 <template>
   <div>
+    <div class="mb-10">
+      <h1 class="text-4xl font-display font-semibold text-slate-800 tracking-tight">
+        Teacher Dashboard
+      </h1>
+      <p class="text-slate-500 text-sm mt-2">Create a new exam or edit existing ones.</p>
+    </div>
     <div class="flex items-center justify-between mb-6">
       <h2 class="text-lg font-display font-semibold text-slate-700">
         {{ !showStudentStats ? 'Your Exams' : 'Students' }}

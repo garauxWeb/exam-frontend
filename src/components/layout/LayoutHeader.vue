@@ -2,7 +2,7 @@
   <header class="bg-white border-b border-slate-200 px-8 py-5">
     <div class="max-w-6xl mx-auto flex items-center justify-between">
       <div @click="router.push('/')" class="cursor-pointer">
-        <h1 class="text-2xl font-display font-semibold text-slate-800 tracking-tight">Dashboard QuizEdu</h1>
+        <h1 class="text-2xl font-display font-semibold text-slate-800 tracking-tight">QuizEdu</h1>
         <p class="text-sm text-slate-400 mt-0.5">{{title}}</p>
       </div>
       <div>

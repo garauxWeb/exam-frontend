@@ -14,14 +14,14 @@
 
       <!-- Links -->
       <nav class="flex items-center gap-5">
-        <a
+        <div
+            @click="goToPage(link.route)"
         v-for="link in links"
         :key="link.label"
-        :href="link.href"
-        class="text-xs text-slate-400 hover:text-indigo-300 transition-colors duration-200"
+        class="text-xs text-slate-400 hover:text-indigo-300 transition-colors duration-200 cursor-pointer"
         >
         {{ link.label }}
-        </a>
+        </div>
       </nav>
 
     </div>
@@ -32,11 +32,20 @@
 import { computed } from 'vue'
 import AppIcon from '@/components/icons/AppIcon.vue'
 
+import {useRouter} from "vue-router";
+
+const router = useRouter();
+
 const year = computed(() => new Date().getFullYear())
 
 const links = [
-  { label: 'Privacy', href: '#' },
-  { label: 'Terms', href: '#' },
-  { label: 'Support', href: '#' },
+  { label: 'Home', route: '/' },
+  { label: 'Teacher', route: '/teacher' },
+  { label: 'Student', route: '/student' },
 ]
+
+const goToPage = (route) => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  router.push(route);
+}
 </script>

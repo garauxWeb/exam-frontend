@@ -16,9 +16,9 @@
         <!-- Brand -->
         <div class="mb-10">
           <h1 class="text-4xl font-display font-semibold text-slate-800 tracking-tight">
-            QuizEdu
+            Student Dashboard
           </h1>
-          <p class="text-slate-500 text-sm mt-2">Select your exam to begin</p>
+          <p class="text-slate-500 text-sm mt-2">Choose an exam you would like to attempt.</p>
         </div>
 
         <!-- Error -->
