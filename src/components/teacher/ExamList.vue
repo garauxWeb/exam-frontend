@@ -14,7 +14,7 @@ const emit = defineEmits(['delete'])
 
 <template>
   <div>
-    <dasboard-header title="Teacher Dashboard" sub-title="Choose an exam you would like to attempt." image="/images/teacher_1.png"/>
+    <dasboard-header title="Teacher Dashboard" sub-title="Choose an exam you would like to attempt." image="/images/teachers/teacher.png"/>
     <div class="flex items-center justify-between mb-6">
       <h2 class="text-lg font-display font-semibold text-slate-700">
         {{ !showStudentStats ? 'Your Exams' : 'Students' }}
