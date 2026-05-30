@@ -58,7 +58,7 @@
             </div>
           </div>
           <button
-              @click="handleDeleteQuestion(question.id)"
+              @click="openDelete(question?.id)"
               class="w-8 h-8 rounded-lg flex items-center justify-center text-slate-300 hover:text-rose-500 hover:bg-rose-50 transition-colors duration-200 flex-shrink-0"
           >
             <app-icon icon="tabler:trash" :size="16" />
@@ -66,11 +66,23 @@
         </div>
       </div>
     </div>
+
+<!--    Delete Modal-->
+    <delete-modal
+        :show="showDeleteModal"
+        title="Delete Question?"
+        description="This question and all its answers will be permanently deleted."
+        @confirm="confirmDelete"
+        @cancel="showDeleteModal = false"
+    />
   </div>
 </template>
 
 <script setup>
+import {ref} from "vue";
 import AppIcon from '@/components/icons/AppIcon.vue'
+import DeleteModal from '@/components/modal/DeleteModal.vue'
+
 import { useExamStore } from '@/stores/useExamStore.js'
 import { useExamBuilder } from '@/composables/teacher/useExamBuilder.js'
 import { useExamResults } from '@/composables/student/useExamResults.js'
@@ -78,4 +90,19 @@ import { useExamResults } from '@/composables/student/useExamResults.js'
 const examStore = useExamStore()
 const { isCreating, handleDeleteQuestion } = useExamBuilder()
 const { getTypeLabel, getTypeBadge } = useExamResults()
+
+/*Delete Modal*/
+const showDeleteModal = ref(false)
+const questionToDelete = ref(null)
+
+function openDelete(questionId) {
+  questionToDelete.value = questionId
+  showDeleteModal.value = true
+}
+
+async function confirmDelete() {
+  await handleDeleteQuestion(questionToDelete.value)
+  showDeleteModal.value = false
+  questionToDelete.value = null
+}
 </script>

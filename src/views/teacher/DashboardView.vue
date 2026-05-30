@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen bg-slate-50 font-sans">
 
-     <!-- Header -->
+    <!-- Header -->
     <layout-header page="teacher" :show-back-button="false" title="Teacher Dashboard"/>
 
     <!-- Main -->
@@ -38,44 +38,24 @@
         </button>
       </div>
       <!-- Exam list -->
-      <exam-list v-else/>
+      <exam-list v-else @delete="openDelete"/>
       <!-- Student stats -->
       <student-exam-results/>
     </main>
-
     <!-- Delete confirmation modal-->
-    <div
-        v-if="showDeleteModal"
-        class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center z-50 px-4"
-    >
-      <div class="bg-white rounded-2xl shadow-xl px-8 py-7 max-w-sm w-full">
-        <div class="w-11 h-11 rounded-full bg-rose-100 flex items-center justify-center mb-4">
-          <app-icon icon="tabler:trash" :size="20" class="text-rose-500" />
-        </div>
-        <h3 class="font-display font-semibold text-slate-800 text-lg mb-2">Delete Exam?</h3>
-        <p class="text-slate-500 text-sm mb-6 leading-relaxed">
-          This action cannot be undone. All questions and answers will be permanently deleted.
-        </p>
-        <div class="flex gap-3">
-          <button
-              @click="resetDelete"
-              class="flex-1 text-sm font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 px-4 py-2.5 rounded-lg transition-colors duration-200"
-          >
-            Cancel
-          </button>
-          <button
-              @click="handleDelete"
-              class="flex-1 text-sm font-medium text-white bg-rose-500 hover:bg-rose-600 px-4 py-2.5 rounded-lg transition-colors duration-200"
-          >
-            Delete
-          </button>
-        </div>
-      </div>
-    </div>
+    <delete-modal
+        :show="showDeleteModal"
+        title="Delete Exam?"
+        description="All questions and answers will be permanently deleted."
+        @confirm="handleDelete"
+        @cancel="showDeleteModal = false"
+    />
   </div>
 </template>
 
 <script setup>
+import { ref } from 'vue'
+import DeleteModal from "@/components/modal/DeleteModal.vue";
 import { useExamStore } from '@/stores/useExamStore.js'
 import { useTeacherExamResults } from '@/composables/teacher/useTeacherExamResults.js'
 import LayoutHeader from '@/components/layout/LayoutHeader.vue'
@@ -84,16 +64,19 @@ import StudentExamResults from '@/components/teacher/StudentExamResults.vue'
 import ExamList from "@/components/teacher/ExamList.vue";
 
 const examStore = useExamStore()
+const { goToCreate, goToBuilder } = useTeacherExamResults()
 
-const {
-  showDeleteModal,
-  resetDelete,
-  goToBuilder,
-  goToCreate,
-} = useTeacherExamResults()
+const showDeleteModal = ref(false)
+const examToDelete = ref(null)
+
+function openDelete(examId) {
+  examToDelete.value = examId
+  showDeleteModal.value = true
+}
 
 async function handleDelete() {
-  await examStore.deleteExam(useTeacherExamResults().examToDelete.value)
-  resetDelete()
+  await examStore.deleteExam(examToDelete.value)
+  showDeleteModal.value = false
+  examToDelete.value = null
 }
 </script>

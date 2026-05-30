@@ -12,15 +12,7 @@
       </div>
 
       <template v-else>
-
-        <!-- Brand -->
-        <div class="mb-10">
-          <h1 class="text-4xl font-display font-semibold text-slate-800 tracking-tight">
-            Student Dashboard
-          </h1>
-          <p class="text-slate-500 text-sm mt-2">Choose an exam you would like to attempt.</p>
-        </div>
-
+        <dasboard-header title="Student Dashboard" sub-title="Choose an exam you would like to attempt."/>
         <!-- Error -->
         <div
             v-if="error"
@@ -78,10 +70,20 @@
 
               <!-- Already completed -->
               <template v-if="isCompleted(exam.id)">
-                <span class="inline-flex items-center gap-1.5 text-xs font-medium text-emerald-600">
+                <div class="flex items-center gap-3">
+                  <div class="w-[80px] h-[80px] shrink-0 rounded-full overflow-hidden">
+                     <img :src="students.includes(exam.exam_sessions.at(0).student_name) ? `/images/students/${exam.exam_sessions.at(0).student_name.toLowerCase()}.png` : `/images/students/no-image.jpg` " alt="Student" class="w-full h-full object-cover" />
+                  </div>
+                <div>
+                  <span class="text-sm">Student: <span class="font-semibold">{{exam.exam_sessions.at(0).student_name}}</span><br /></span>
+                       <span class="inline-flex items-center gap-1.5 text-xs font-medium text-emerald-600">
                   <app-icon icon="tabler:check" :size="14" />
                   Completed
                 </span>
+
+                </div>
+                </div>
+
                 <button
                     @click="goToResults(exam.id)"
                     class="inline-flex items-center gap-1.5 text-xs font-medium text-white bg-emerald-500 hover:bg-emerald-600 px-4 py-2 rounded-lg transition-colors duration-200"
@@ -102,7 +104,6 @@
                   <app-icon icon="tabler:arrow-right" :size="14" />
                 </button>
               </template>
-
             </div>
           </div>
         </div>
@@ -117,13 +118,16 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { examApi } from '@/api/exams/index.js'
 import LayoutHeader from '@/components/layout/LayoutHeader.vue'
+import {useExamResults} from "@/composables/student/useExamResults.js";
 import AppIcon from '@/components/icons/AppIcon.vue'
+import DasboardHeader from "@/components/layout/DasboardHeader.vue";
 
 const router = useRouter()
 
 const exams = ref([])
 const loading = ref(false)
 const error = ref(null)
+const {students} = useExamResults()
 
 function storageKey(examId) {
   return `quizedu_session_${examId}`

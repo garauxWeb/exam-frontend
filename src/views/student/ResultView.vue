@@ -31,17 +31,25 @@
           <div class="bg-gradient-to-r from-indigo-50 to-sky-50 px-8 py-7 flex items-start justify-between flex-wrap gap-6">
 
             <!-- Student info -->
-            <div>
-              <p class="text-[11px] font-semibold text-indigo-500 uppercase tracking-[0.08em] mb-1.5">
-                Results for
-              </p>
-              <h2 class="text-2xl font-display font-semibold text-slate-800 leading-tight">
-                {{ results.student_name }}
-              </h2>
-              <p class="text-slate-500 text-sm mt-1.5">
-                {{ results.exam?.title }} · {{ results.exam?.subject }}
-              </p>
+            <div class="flex items-center gap-6">
+              <div class="w-[120px] h-[120px] shrink-0 rounded-full overflow-hidden">
+                <img :src="students.includes(results.student_name) ? `/images/students/${results.student_name.toLowerCase()}.png` : '/images/students/no-image.jpg' " alt="descrizione" class="w-full h-full object-cover" />
+              </div>
+              <div>
+                <div>
+                  <p class="text-[11px] font-semibold text-indigo-500 uppercase tracking-[0.08em] mb-1.5">
+                    Results for
+                  </p>
+                  <h2 class="text-2xl font-display font-semibold text-slate-800 leading-tight">
+                    {{ results.student_name }}
+                  </h2>
+                  <p class="text-slate-500 text-sm mt-1.5">
+                    {{ results.exam?.title }} · {{ results.exam?.subject }}
+                  </p>
+                </div>
+              </div>
             </div>
+
 
             <!-- Score ring -->
             <div class="flex flex-col items-center">
@@ -163,6 +171,7 @@ const results = ref(null)
 const loading = ref(false)
 const error = ref(null)
 const showDetailsResult = ref(false)
+const {students} = useExamResults()
 
 // ── Lifecycle ──────────────────────────────────────────────
 onMounted(async () => {

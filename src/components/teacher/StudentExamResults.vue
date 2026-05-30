@@ -2,9 +2,11 @@
 import AppIcon from '@/components/icons/AppIcon.vue'
 import { useQuizStore } from '@/stores/useQuizStore.js'
 import { useTeacherExamResults } from '@/composables/teacher/useTeacherExamResults.js'
+import {useExamResults} from "@/composables/student/useExamResults.js";
 
 const answerStore = useQuizStore()
 const { showStudentStats, scorePercent } = useTeacherExamResults()
+const {getStudentAvatar} = useExamResults()
 </script>
 
 <template>
@@ -16,8 +18,8 @@ const { showStudentStats, scorePercent } = useTeacherExamResults()
     >
       <!-- Student header -->
       <div class="flex items-center gap-3 mb-1">
-        <div class="w-9 h-9 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 text-sm font-medium flex-shrink-0">
-          {{ stat.student_name.charAt(0).toUpperCase() }}
+        <div class="w-12 h-12 rounded-full flex items-center justify-center text-indigo-700 text-sm font-medium flex-shrink-0">
+          <img :src="getStudentAvatar(stat.student_name)" alt="Student" class="rounded-full">
         </div>
         <div>
           <p class="text-sm font-medium text-slate-800 m-0">{{ stat.student_name }}</p>
@@ -95,7 +97,3 @@ const { showStudentStats, scorePercent } = useTeacherExamResults()
     </div>
   </div>
 </template>
-
-<style scoped>
-
-</style>

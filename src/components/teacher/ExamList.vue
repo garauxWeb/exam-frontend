@@ -2,22 +2,19 @@
 import AppIcon from "@/components/icons/AppIcon.vue";
 import {useQuizStore} from "@/stores/useQuizStore.js";
 import {useExamStore} from "@/stores/useExamStore.js";
-
 import {useTeacherExamResults} from "@/composables/teacher/useTeacherExamResults.js";
+import DasboardHeader from "@/components/layout/DasboardHeader.vue";
 
 const examStore = useExamStore()
 const answerStore = useQuizStore()
-const { confirmDelete,showStudentStats,goToBuilder,toggleStudentStats } = useTeacherExamResults()
+const { showStudentStats, goToBuilder, toggleStudentStats } = useTeacherExamResults()
+
+const emit = defineEmits(['delete'])
 </script>
 
 <template>
   <div>
-    <div class="mb-10">
-      <h1 class="text-4xl font-display font-semibold text-slate-800 tracking-tight">
-        Teacher Dashboard
-      </h1>
-      <p class="text-slate-500 text-sm mt-2">Create a new exam or edit existing ones.</p>
-    </div>
+    <dasboard-header title="Teacher Dashboard" sub-title="Choose an exam you would like to attempt." image="/images/teacher_1.png"/>
     <div class="flex items-center justify-between mb-6">
       <h2 class="text-lg font-display font-semibold text-slate-700">
         {{ !showStudentStats ? 'Your Exams' : 'Students' }}
@@ -58,7 +55,7 @@ const { confirmDelete,showStudentStats,goToBuilder,toggleStudentStats } = useTea
             Edit
           </button>
           <button
-              @click="confirmDelete(exam.id)"
+              @click="emit('delete', exam.id)"
               class="inline-flex items-center gap-1.5 text-xs font-medium text-rose-500 hover:text-rose-600 bg-rose-50 hover:bg-rose-100 px-3.5 py-2 rounded-lg transition-colors duration-200"
           >
             <app-icon icon="tabler:trash" :size="14" />

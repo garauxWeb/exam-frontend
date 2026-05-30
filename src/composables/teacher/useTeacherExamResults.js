@@ -5,10 +5,14 @@ import { storeToRefs } from 'pinia'
 export function useTeacherExamResults() {
     const router = useRouter()
     const teacherStore = useTeacherStore()
-    const { showStudentStats, showDeleteModal, examToDelete } = storeToRefs(teacherStore)
+    const { showStudentStats } = storeToRefs(teacherStore)
 
     function goToBuilder(examId) {
         router.push(`/teacher/exams/${examId}`)
+    }
+
+    function goToCreate() {
+        router.push('/teacher/exams/create')
     }
 
     function scorePercent(exam) {
@@ -17,16 +21,10 @@ export function useTeacherExamResults() {
     }
 
     return {
-        // States will be reactive everywhere
         showStudentStats,
-        showDeleteModal,
-        examToDelete,
-        // Actions
         toggleStudentStats: teacherStore.toggleStudentStats,
-        confirmDelete: teacherStore.confirmDelete,
-        resetDelete: teacherStore.resetDelete,
-        // Helpers
         goToBuilder,
-        scorePercent
+        goToCreate,
+        scorePercent,
     }
 }

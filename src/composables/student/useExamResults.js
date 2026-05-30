@@ -1,4 +1,16 @@
+import { ref } from 'vue'
+
 export function useExamResults() {
+
+    const students = ref(['Rebecca','Daniel'])
+
+    const getStudentAvatar = (name) => {
+        if(students.value.includes(name)) {
+            return `/images/students/${name.toLowerCase()}.png`
+        }
+        return '/images/students/no-image.jpg'
+
+    }
 
     const checkIfAnswerIsCorrect = (answer) => {
         if (answer.question?.type === 'open') return null
@@ -74,6 +86,8 @@ export function useExamResults() {
     }
 
     return {
+        students,
+        getStudentAvatar,
         checkIfAnswerIsCorrect,
         getRightAnswer,
         getFinalExamResult,
